@@ -4,3 +4,13 @@ compatibility_date = "2025-01-01"
 main = "./src/index.ts"
 name = "Value 1"
 name = "Value 2" # Error: 'name' is redefined
+[section]
+key = "value"
+
+[section] # Error: 'section' is redefined
+other_key = "value"
+[a.b]
+c = 1
+
+[a] # Error: Cannot define parent 'a' after child 'a.b' is defined
+d = 2
