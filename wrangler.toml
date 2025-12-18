@@ -1,16 +1,11 @@
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "2025-01-01"
-main = "./src/tracnghiem.ts"
-name = "Value 1"
-name = "Value 2" # Error: 'name' is redefined
-[section]
-key = "value"
+name = "trac-nghiem-tin-hoc"
+main = "src/index.js" # Worker sẽ xử lý yêu cầu
+compatibility_date = "2024-03-01"
 
-[section] # Error: 'section' is redefined
-other_key = "value"
-[a.b]
-c = 1
+# Cấu hình để Cloudflare hiểu đây là trang web có file tĩnh
+[assets]
+directory = "./public" # Thư mục chứa file index.html và questions.json
+binding = "ASSETS"
 
-[a] # Error: Cannot define parent 'a' after child 'a.b' is defined
-d = 2
+[observability]
+enabled = true
