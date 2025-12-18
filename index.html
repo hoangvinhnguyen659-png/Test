@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Trắc Nghiệm Thông Minh</title>
+    <style>
+        /* Giao diện tương tự như tôi đã gửi ở trên, tập trung vào trải nghiệm di động */
+        body { font-family: sans-serif; background: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
+        .quiz-card { background: white; width: 100%; max-width: 500px; padding: 20px; border-radius: 15px; shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .option { border: 2px solid #eee; padding: 12px; margin: 8px 0; border-radius: 8px; cursor: pointer; }
+        .correct { background: #d4edda; border-color: #28a745; }
+        .wrong { background: #f8d7da; border-color: #dc3545; }
+        .disabled { pointer-events: none; }
+        #next-btn { width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 8px; display: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card" id="quiz-app">
+        <h2 id="q-text">Đang nạp câu hỏi...</h2>
+        <div id="options-container"></div>
+        <button id="next-btn">Tiếp theo</button>
+    </div>
+
+    <script>
+        let quizData = [];
+        let currentIdx = 0;
+
+        // HÀM QUAN TRỌNG: Tự động nạp file JSON
+        async function loadData() {
+            try {
+                const response = await fetch('questions.json'); // Đọc file cùng thư mục
+                quizData = await response.json();
+                quizData = quizData.sort(() => Math.random() - 0.5); // Xáo trộn
+                renderQuestion();
+            } catch (err) {
+                document.getElementById('q-text').innerText = "Lỗi: Không tìm thấy file questions.json!";
+            }
+        }
+
+        function renderQuestion() {
+            const q = quizData[currentIdx];
+            document.getElementById('q-text').innerText = q.q;
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            q.a.forEach((text, i) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.innerText = text;
+                div.onclick = () => {
+                    const all = document.querySelectorAll('.option');
+                    all.forEach(opt => opt.classList.add('disabled'));
+                    if(i === q.c) div.classList.add('correct');
+                    else {
+                        div.classList.add('wrong');
+                        all[q.c].classList.add('correct');
+                    }
+                    document.getElementById('next-btn').style.display = 'block';
+                };
+                container.appendChild(div);
+            });
+        }
+
+        document.getElementById('next-btn').onclick = () => {
+            currentIdx++;
+            if(currentIdx < quizData.length) renderQuestion();
+            else alert("Hoàn thành bài thi!");
+        };
+
+        loadData();
+    </script>
+</body>
+</html>
