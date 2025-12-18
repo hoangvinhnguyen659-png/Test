@@ -1,7 +1,7 @@
 name = "my-worker"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
-main = "./src/index.ts"
+main = "./src/tracnghiem.ts"
 name = "Value 1"
 name = "Value 2" # Error: 'name' is redefined
 [section]
