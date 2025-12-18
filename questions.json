@@ -1,0 +1,12 @@
+[
+  {
+    "q": "Thuật ngữ 'Trí tuệ nhân tạo' (AI) chính thức được đưa ra tại sự kiện nào?",
+    "a": ["Phép thử Turing", "Hội thảo Dartmouth", "MYCIN", "Robot Sophia"],
+    "c": 1
+  },
+  {
+    "q": "HTML viết tắt của từ nào?",
+    "a": ["HyperText Markup Language", "HighTech Language", "HyperLink Text", "None"],
+    "c": 0
+  }
+]
